@@ -10,15 +10,15 @@ const AppRouter = () => {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <LoginPage />
+            element: <ProductPage />
         },
         {
             path: "/register",
             element: <RegisterPage />
         },
         {
-            path: "/products",
-            element: <ProductPage />
+            path: "/login",
+            element: <LoginPage />
         },
         {
             path: "/products/:productId",
