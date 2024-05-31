@@ -57,7 +57,6 @@ const ProductPage = () => {
 
   return (
     <>
-      <h1>This is the product page</h1>
       <br />
       <Row gutter={5}>
         <div className="product-list">{productsList}</div>

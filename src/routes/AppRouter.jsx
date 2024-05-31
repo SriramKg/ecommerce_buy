@@ -13,6 +13,10 @@ const AppRouter = () => {
             element: <ProductPage />
         },
         {
+            path: "/products",
+            element: <ProductPage />
+        },
+        {
             path: "/register",
             element: <RegisterPage />
         },
