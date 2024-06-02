@@ -3,6 +3,7 @@ import LoginPage from "../pages/LoginPage";
 import ProductPage from "../pages/ProductPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 import RegisterPage from "../pages/RegisterPage";
+import CategoryProducts from "../pages/CategoryProducts";
 
 
 const AppRouter = () => {
