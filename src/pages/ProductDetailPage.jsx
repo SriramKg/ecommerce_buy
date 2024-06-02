@@ -10,7 +10,7 @@ const ProductDetailPage = () => {
   const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
   console.log(productId);
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/${productId}`)
+    fetch(`https://dummyjson.com/products/${productId}`)
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
@@ -34,7 +34,7 @@ const ProductDetailPage = () => {
           <Card title={product.title} bordered={false}>
             <div>
               <p>Category : {product.category}</p>
-              <Image width="auto" src={product.image} />
+              <Image width="auto" src={product.images[0]} />
               <p>{product.title}</p>
               <Flex gap="middle" vertical>
                 <Rate tooltips={desc} onChange={setValue} value={value} />

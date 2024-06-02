@@ -14,11 +14,11 @@ const ProductPage = () => {
   };
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    fetch('https://dummyjson.com/products')
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
-        setProducts(json);
+        console.log(json.products);
+        setProducts(json.products);
       });
   }, []);
 
@@ -31,7 +31,7 @@ const ProductPage = () => {
   }
 
   const productsList = products.map((product) => (
-    <Col span={5}>
+    <Col span={5} key={product.id}>
       <Card title={product.title} bordered={false} hoverable={true}>
         <div
           className="product-item"
@@ -41,7 +41,7 @@ const ProductPage = () => {
           <p>Category : {product.category}</p>
           <img
             style={{ width: "400px" }}
-            src={product.image}
+            src={product.images[0]}
             alt="productImage"
           /> 
           <p>{product.title}</p>
