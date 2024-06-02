@@ -17,7 +17,7 @@ const ProductDetailPage = () => {
         console.log(json);
         setProduct(json);
       });
-  }, []);
+  }, [product]);
 
   
 
