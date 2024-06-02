@@ -1,7 +1,7 @@
 import { json, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { Card, Col, Row } from "antd";
-import { Flex, Spin, Button } from "antd";
+import { Flex, Spin, Button, Image } from "antd";
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
@@ -31,25 +31,19 @@ const ProductPage = () => {
   }
 
   const productsList = products.map((product) => (
-    <Col span={5} key={product.id}>
-      <Card title={product.title} bordered={false} hoverable={true}>
-        <div
-          className="product-item"
-          key={product.id}
-          onClick={() => goProduct(product.id)}
-        >
+    <Col key={product.id} xs={24} sm={12} md={8} lg={6} xl={5} >
+      <Card title={product.title} bordered={false} hoverable={true} onClick={() => goProduct(product.id)}>
           <p>Category : {product.category}</p>
-          <img
-            style={{ width: "400px" }}
+          <Image
             src={product.images[0]}
             alt="productImage"
+            preview={false} height={250}
           /> 
           <p>{product.title}</p>
           <p>Product Price : ${product.price}</p>
-        </div>
         <br />
         <Flex wrap gap="small">
-        <Button type="primary">Add to Cart</Button>
+        <Button type="primary">Add to Wishlist</Button>
         </Flex>
       </Card>
     </Col>

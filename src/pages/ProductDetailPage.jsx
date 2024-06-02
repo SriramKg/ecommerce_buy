@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { json, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Card, Col, Row } from "antd";
 import { Flex, Spin, Rate, Image } from "antd";
 
