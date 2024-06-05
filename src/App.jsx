@@ -1,14 +1,15 @@
+import {useNavigate} from "react-router-dom";
 import AppRouter from "./routes/AppRouter";
 import "./styles.css";
 import { Layout, Flex, Button, Badge, Avatar } from "antd";
 import {
-  ShoppingTwoTone,
   ShoppingOutlined,
   HeartOutlined,
 } from "@ant-design/icons";
 const { Header, Footer } = Layout;
 
 function App() {
+
   return (
     <Layout>
       <Header style={{ color: "white" }}>

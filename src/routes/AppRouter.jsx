@@ -3,7 +3,7 @@ import LoginPage from "../pages/LoginPage";
 import ProductPage from "../pages/ProductPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 import RegisterPage from "../pages/RegisterPage";
-import CategoryProducts from "../pages/CategoryProducts";
+import CartPage from "../pages/CartPage";
 
 
 const AppRouter = () => {
@@ -28,6 +28,10 @@ const AppRouter = () => {
         {
             path: "/products/:productId",
             element: <ProductDetailPage />
+        },
+        {
+            path: "/cart",
+            element: <CartPage />
         }
     ]);
 

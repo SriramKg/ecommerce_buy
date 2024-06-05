@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Card, Col, Layout, Row } from "antd";
 import { Flex, Spin, Rate, Image, Button, Divider } from "antd";
 import CategoryProducts from "./CategoryProducts";
 
 const ProductDetailPage = () => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem('buy-token');
+  console.log(token);
   const { productId } = useParams();
   const [value, setValue] = useState(3);
   const [product, setProduct] = useState(null);
@@ -17,7 +20,7 @@ const ProductDetailPage = () => {
         console.log(json);
         setProduct(json);
       });
-  }, [product]);
+  }, [productId]);
 
   if (!product) {
     return (
@@ -25,6 +28,14 @@ const ProductDetailPage = () => {
         <Spin size="large" fullscreen />
       </Flex>
     );
+  }
+  const handleCart = () => {
+    if(!token){
+      navigate('/login');
+    }
+    else{
+      navigate("/cart");
+    }
   }
 
   return (
@@ -48,7 +59,7 @@ const ProductDetailPage = () => {
               <h2>Product Price : ${product.price}</h2>
               <br />
               <Flex>
-                <Button type="primary" style={{ marginRight: "10px" }}>
+                <Button type="primary" style={{ marginRight: "10px" }} onClick={handleCart}>
                   Add to Cart
                 </Button>
                 <Button type="primary" style={{backgroundColor: "#ff6680"}}> WishList</Button>
