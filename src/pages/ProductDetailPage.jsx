@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card, Col, Layout, Row } from "antd";
-import { Flex, Spin, Rate, Image, Button } from "antd";
+import { Flex, Spin, Rate, Image, Button, Divider } from "antd";
 import CategoryProducts from "./CategoryProducts";
 
 const ProductDetailPage = () => {
@@ -18,8 +18,6 @@ const ProductDetailPage = () => {
         setProduct(json);
       });
   }, [product]);
-
-  
 
   if (!product) {
     return (
@@ -49,15 +47,21 @@ const ProductDetailPage = () => {
               <br />
               <h2>Product Price : ${product.price}</h2>
               <br />
-              <Button type="primary" style={{ marginRight: '10px' }}>Add to Cart</Button>
+              <Flex>
+                <Button type="primary" style={{ marginRight: "10px" }}>
+                  Add to Cart
+                </Button>
+                <Button type="primary" style={{backgroundColor: "#ff6680"}}> WishList</Button>
+              </Flex>
               <br />
             </Card>
           </Col>
         </Row>
         <br />
+        <Divider dashed />
         <h1>You might also like</h1>
         <br />
-        <CategoryProducts cat={product.category}/>
+        <CategoryProducts cat={product.category} />
       </Layout>
     </>
   );

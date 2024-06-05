@@ -43,7 +43,7 @@ const ProductPage = () => {
           <p>Product Price : ${product.price}</p>
         <br />
         <Flex wrap gap="small">
-        <Button type="primary">Add to Wishlist</Button>
+        <Button type="primary" style={{backgroundColor: "#ff6680"}}>Add to Wishlist</Button>
         </Flex>
       </Card>
     </Col>
