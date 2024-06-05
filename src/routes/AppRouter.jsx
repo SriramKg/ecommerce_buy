@@ -4,6 +4,7 @@ import ProductPage from "../pages/ProductPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 import RegisterPage from "../pages/RegisterPage";
 import CartPage from "../pages/CartPage";
+import AppLayout from "../pages/AppLayout";
 
 
 const AppRouter = () => {

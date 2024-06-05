@@ -3,8 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Card, Col, Layout, Row } from "antd";
 import { Flex, Spin, Rate, Image, Button, Divider } from "antd";
 import CategoryProducts from "./CategoryProducts";
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart,updateToCart } from "../store/cartSlice";
+import AppLayout from "./AppLayout";
 
 const ProductDetailPage = () => {
+  const cart = useSelector((state) => state.cart.cartItem);
+  //console.log(cart);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem('buy-token');
   console.log(token);
@@ -29,17 +35,26 @@ const ProductDetailPage = () => {
       </Flex>
     );
   }
-  const handleCart = () => {
-    if(!token){
-      navigate('/login');
+  const handleCart = (product) => {
+    const isProductExisting = cart.findIndex((item) => item.product.id === product.id);
+    console.log(isProductExisting);
+    console.log(cart[isProductExisting]);
+    if(isProductExisting !== -1) {
+      dispatch(updateToCart({
+        product: product,
+        quantity: cart[isProductExisting].quantity + 1,
+      }))
     }
     else{
-      navigate("/cart");
+      dispatch(addToCart({
+        product: product,
+        quantity: 1,
+      }))
     }
   }
 
   return (
-    <>
+    <AppLayout>
       <Layout>
         <Row gutter={[16, 16]}>
           <Col xs={24} md={12}>
@@ -59,7 +74,7 @@ const ProductDetailPage = () => {
               <h2>Product Price : ${product.price}</h2>
               <br />
               <Flex>
-                <Button type="primary" style={{ marginRight: "10px" }} onClick={handleCart}>
+                <Button type="primary" style={{ marginRight: "10px" }} onClick={() => {handleCart(product)}}>
                   Add to Cart
                 </Button>
                 <Button type="primary" style={{backgroundColor: "#ff6680"}}> WishList</Button>
@@ -74,7 +89,7 @@ const ProductDetailPage = () => {
         <br />
         <CategoryProducts cat={product.category} />
       </Layout>
-    </>
+    </AppLayout>
   );
 };
 

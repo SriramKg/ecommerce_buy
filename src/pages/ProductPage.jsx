@@ -1,7 +1,8 @@
-import { json, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { Card, Col, Row } from "antd";
 import { Flex, Spin, Button, Image } from "antd";
+import AppLayout from "./AppLayout";
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
@@ -50,16 +51,16 @@ const ProductPage = () => {
   ));
 
   return (
-    <>
+    <AppLayout>
       <br />
       <Row gutter={5}>
         <div className="product-list">{productsList}</div>
       </Row>
       <br />
-      <button type="submit" onClick={handleSubmit}>
+      {/* <button type="submit" onClick={handleSubmit}>
         Back to Login
-      </button>
-    </>
+      </button> */}
+    </AppLayout>
   );
 };
 
