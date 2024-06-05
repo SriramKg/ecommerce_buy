@@ -1,12 +1,12 @@
 import AppRouter from "./routes/AppRouter";
 import "./styles.css";
-import { Layout, Flex, Button } from "antd";
+import { Layout, Flex, Button, Badge, Avatar } from "antd";
 import {
   ShoppingTwoTone,
   ShoppingOutlined,
   HeartOutlined,
 } from "@ant-design/icons";
-const { Header, Footer, Content } = Layout;
+const { Header, Footer } = Layout;
 
 function App() {
   return (
@@ -38,6 +38,7 @@ function App() {
                 }}
               >
                 <ShoppingOutlined style={{ fontSize: "22px" }} />
+                <Badge count={8} size="small" offset={[-5, -15]} showZero={true} overflowCount={9}/>
                 <p>Cart</p>
               </Button>
             </Flex>
