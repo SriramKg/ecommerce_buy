@@ -1,4 +1,4 @@
-import { Layout, Flex, Button, Badge, Avatar } from "antd";
+import { Layout, Flex, Button, Badge } from "antd";
 import { ShoppingOutlined, HeartOutlined } from "@ant-design/icons";
 import { Content } from "antd/es/layout/layout";
 import { useSelector } from "react-redux";
@@ -7,6 +7,7 @@ const { Header, Footer } = Layout;
 
 const AppLayout = ({ children }) => {
   const cart = useSelector((state) => state.cart.cartItem);
+  const wish = useSelector((state) => state.wish.wishList);
   const navigate = useNavigate();
 
   const goToWishlist = () => {
@@ -34,6 +35,7 @@ const AppLayout = ({ children }) => {
                 onClick={() => goToWishlist()}
               >
                 <HeartOutlined style={{ fontSize: "22px" }} />
+                <Badge dot offset={[-5, -15]} count={wish.length}/>
                 <p>WishList</p>
               </Button>
             </Flex>

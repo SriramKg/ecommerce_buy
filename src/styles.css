@@ -14,6 +14,17 @@
     /* color: #ffffff; */
   }
 
+  .custom-button {
+    background-color: #ffffff !important;
+    color: black !important;
+    border: dotted !important;
+    transition: background-color 0.3s, color 0.3s !important;
+  }
+  .custom-button:hover {
+    background-color: #ff6680 !important;
+    color: white !important;
+  }
+
 .error_style {
   color: #333;
 }

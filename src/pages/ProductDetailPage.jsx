@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card, Col, Layout, Row } from "antd";
-import { Flex, Spin, Rate, Image, Button, Divider } from "antd";
+import { Flex, Spin, Rate, Image, Button, Divider, notification } from "antd";
 import CategoryProducts from "./CategoryProducts";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart,updateToCart } from "../store/cartSlice";
@@ -9,6 +9,7 @@ import { addToWish, alreadyWishListed } from "../store/wishSlice";
 import AppLayout from "./AppLayout";
 
 const ProductDetailPage = () => {
+  const [api, contextHolder] = notification.useNotification();
   const cart = useSelector((state) => state.cart.cartItem);
   const wish = useSelector((state) => state.wish.wishList);
   //console.log(cart);
@@ -37,14 +38,31 @@ const ProductDetailPage = () => {
       </Flex>
     );
   }
+  const openNotificationWithIcon = (type) => {
+    api[type]({
+      message: 'Product Added to Cart!!',
+      });
+  };
+  const openNotificationWithIconforWish = (type) => {
+    api[type]({
+      message: 'Product Added to WishList!!',
+      });
+  };
+  const openNotificationWithIconforWishDetail = (type) => {
+    api[type]({
+      message: 'Product Already exists in WishList!!',
+      });
+  }
   const handleWish = (product) => {
     const isProductAlreadyWishlisted = wish.findIndex((item) => item.product.id === product.id);
     if(isProductAlreadyWishlisted !== -1){
-      dispatch(alreadyWishListed({
-        product: product,
-      }))
+      openNotificationWithIconforWishDetail('info');
+      // dispatch(alreadyWishListed({
+      //   product: product,
+      // }))
     }
     else{
+      openNotificationWithIconforWish('success'); 
       dispatch(addToWish({
         product: product,
       }))
@@ -89,10 +107,11 @@ const ProductDetailPage = () => {
               <h2>Product Price : ${product.price}</h2>
               <br />
               <Flex>
-                <Button type="primary" style={{ marginRight: "10px" }} onClick={() => {handleCart(product)}}>
+                {contextHolder}
+                <Button type="primary" style={{ marginRight: "10px" }} onClick={() => {openNotificationWithIcon('success'); handleCart(product)}}>
                   Add to Cart
                 </Button>
-                <Button type="primary" style={{backgroundColor: "#ff6680"}} onClick={() => handleWish(product)}> WishList</Button>
+                <Button type="primary" style={{backgroundColor: "#ff6680"}} onClick={() => {handleWish(product)}}> WishList</Button>
               </Flex>
               <br />
             </Card>

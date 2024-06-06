@@ -1,42 +1,52 @@
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addToWish, alreadyWishListed } from "../store/wishSlice";
+import { ShoppingOutlined, HeartOutlined } from "@ant-design/icons";
 import { Card, Col, Row } from "antd";
-import { Flex, Spin, Button, Image } from "antd";
+import { Flex, Spin, Button, Image, notification } from "antd";
 import AppLayout from "./AppLayout";
+import "../styles.css";
 
 const ProductPage = () => {
+  const [api, contextHolder] = notification.useNotification();
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const wish = useSelector((state) => state.wish.wishList);
-  console.log("wishlist",wish);
+  console.log("wishlist", wish);
 
-  const handleWish = (product) => {
-    const isProductAlreadyWishlisted = wish.findIndex((item) => item.product.id === product.id);
-    console.log(isProductAlreadyWishlisted);
-    if(isProductAlreadyWishlisted !== -1){
-      dispatch(alreadyWishListed({
-        product: product,
-      }))
-    }
-    else{
-      dispatch(addToWish({
-        product: product,
-      }))
-    }
-  }
-
-  const handleSubmit = () => {
-    navigate("/");
+  const openNotificationWithIcon = (type) => {
+    api[type]({
+      message: 'Product Added to Wishlist!!',
+      });
   };
+  const handleWish = (product) => {
+    const isProductAlreadyWishlisted = wish.findIndex(
+      (item) => item.product.id === product.id
+    );
+    console.log(isProductAlreadyWishlisted);
+    if (isProductAlreadyWishlisted !== -1) {
+      dispatch(
+        alreadyWishListed({
+          product: product,
+        })
+      );
+    } else {
+      dispatch(
+        addToWish({
+          product: product,
+        })
+      );
+    }
+  };
+  
   const goProduct = (pId) => {
     navigate(`/products/${pId}`);
   };
 
   useEffect(() => {
-    fetch('https://dummyjson.com/products')
+    fetch("https://dummyjson.com/products")
       .then((res) => res.json())
       .then((json) => {
         console.log(json.products);
@@ -53,19 +63,36 @@ const ProductPage = () => {
   }
 
   const productsList = products.map((product) => (
-    <Col key={product.id} xs={24} sm={12} md={8} lg={6} xl={5} >
-      <Card title={product.title} bordered={false} hoverable={true} onClick={() => goProduct(product.id)}>
-          <p>Category : {product.category}</p>
-          <Image
-            src={product.images[0]}
-            alt="productImage"
-            preview={false} height={250}
-          /> 
-          <p>{product.title}</p>
-          <p>Product Price : ${product.price}</p>
+    <Col key={product.id} xs={24} sm={12} md={8} lg={6} xl={5}>
+      <Card
+        title={product.title}
+        bordered={false}
+        hoverable={true}
+        onClick={() => goProduct(product.id)}
+      >
+        <p>Category : {product.category}</p>
+        <Image
+          src={product.images[0]}
+          alt="productImage"
+          preview={false}
+          height={250}
+        />
+        <p>{product.title}</p>
+        <p>Product Price : ${product.price}</p>
         <br />
         <Flex wrap gap="small">
-        <Button type="primary" onClick={(e) => handleWish(product)} style={{backgroundColor: "#ff6680"}}>Add to Wishlist</Button>
+        {contextHolder}
+          <Button
+            className="custom-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              openNotificationWithIcon('success');
+              handleWish(product);
+            }}
+          >
+            <HeartOutlined />
+            Add to Wishlist
+          </Button>
         </Flex>
       </Card>
     </Col>
