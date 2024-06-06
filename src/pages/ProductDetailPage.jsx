@@ -5,10 +5,12 @@ import { Flex, Spin, Rate, Image, Button, Divider } from "antd";
 import CategoryProducts from "./CategoryProducts";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart,updateToCart } from "../store/cartSlice";
+import { addToWish, alreadyWishListed } from "../store/wishSlice";
 import AppLayout from "./AppLayout";
 
 const ProductDetailPage = () => {
   const cart = useSelector((state) => state.cart.cartItem);
+  const wish = useSelector((state) => state.wish.wishList);
   //console.log(cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,6 +36,19 @@ const ProductDetailPage = () => {
         <Spin size="large" fullscreen />
       </Flex>
     );
+  }
+  const handleWish = (product) => {
+    const isProductAlreadyWishlisted = wish.findIndex((item) => item.product.id === product.id);
+    if(isProductAlreadyWishlisted !== -1){
+      dispatch(alreadyWishListed({
+        product: product,
+      }))
+    }
+    else{
+      dispatch(addToWish({
+        product: product,
+      }))
+    }
   }
   const handleCart = (product) => {
     const isProductExisting = cart.findIndex((item) => item.product.id === product.id);
@@ -77,7 +92,7 @@ const ProductDetailPage = () => {
                 <Button type="primary" style={{ marginRight: "10px" }} onClick={() => {handleCart(product)}}>
                   Add to Cart
                 </Button>
-                <Button type="primary" style={{backgroundColor: "#ff6680"}}> WishList</Button>
+                <Button type="primary" style={{backgroundColor: "#ff6680"}} onClick={() => handleWish(product)}> WishList</Button>
               </Flex>
               <br />
             </Card>

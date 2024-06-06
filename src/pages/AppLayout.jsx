@@ -2,19 +2,27 @@ import { Layout, Flex, Button, Badge, Avatar } from "antd";
 import { ShoppingOutlined, HeartOutlined } from "@ant-design/icons";
 import { Content } from "antd/es/layout/layout";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const { Header, Footer } = Layout;
 
 const AppLayout = ({ children }) => {
   const cart = useSelector((state) => state.cart.cartItem);
+  const navigate = useNavigate();
+
+  const goToWishlist = () => {
+    navigate("/wishlist");
+  };
+  const goToCart = () => {
+    navigate("/cart");
+  };
   //console.log("cart",cart);
   return (
     <Layout>
       <Header style={{ color: "white" }}>
         <Flex gap="large" justify="space-between">
-            <Link to='/' style={{ color: "white", textDecoration: "none" }}>
+          <Link to="/" style={{ color: "white", textDecoration: "none" }}>
             E-COMMERCE BUY
-            </Link>
+          </Link>
           <Flex gap="large">
             <Flex>
               <Button
@@ -23,6 +31,7 @@ const AppLayout = ({ children }) => {
                   background: "#001529",
                   border: "none",
                 }}
+                onClick={() => goToWishlist()}
               >
                 <HeartOutlined style={{ fontSize: "22px" }} />
                 <p>WishList</p>
@@ -35,6 +44,7 @@ const AppLayout = ({ children }) => {
                   background: "#001529",
                   border: "none",
                 }}
+                onClick={() => goToCart()}
               >
                 <ShoppingOutlined style={{ fontSize: "22px" }} />
                 <Badge

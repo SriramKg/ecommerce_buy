@@ -1,5 +1,7 @@
 import {  useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addToWish, alreadyWishListed } from "../store/wishSlice";
 import { Card, Col, Row } from "antd";
 import { Flex, Spin, Button, Image } from "antd";
 import AppLayout from "./AppLayout";
@@ -7,6 +9,25 @@ import AppLayout from "./AppLayout";
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const wish = useSelector((state) => state.wish.wishList);
+  console.log("wishlist",wish);
+
+  const handleWish = (product) => {
+    const isProductAlreadyWishlisted = wish.findIndex((item) => item.product.id === product.id);
+    console.log(isProductAlreadyWishlisted);
+    if(isProductAlreadyWishlisted !== -1){
+      dispatch(alreadyWishListed({
+        product: product,
+      }))
+    }
+    else{
+      dispatch(addToWish({
+        product: product,
+      }))
+    }
+  }
+
   const handleSubmit = () => {
     navigate("/");
   };
@@ -44,7 +65,7 @@ const ProductPage = () => {
           <p>Product Price : ${product.price}</p>
         <br />
         <Flex wrap gap="small">
-        <Button type="primary" style={{backgroundColor: "#ff6680"}}>Add to Wishlist</Button>
+        <Button type="primary" onClick={(e) => handleWish(product)} style={{backgroundColor: "#ff6680"}}>Add to Wishlist</Button>
         </Flex>
       </Card>
     </Col>

@@ -4,7 +4,7 @@ import ProductPage from "../pages/ProductPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 import RegisterPage from "../pages/RegisterPage";
 import CartPage from "../pages/CartPage";
-import AppLayout from "../pages/AppLayout";
+import WishPage from "../pages/WishPage";
 
 
 const AppRouter = () => {
@@ -33,6 +33,10 @@ const AppRouter = () => {
         {
             path: "/cart",
             element: <CartPage />
+        },
+        {
+            path: "/wishlist",
+            element: <WishPage />
         }
     ]);
 
