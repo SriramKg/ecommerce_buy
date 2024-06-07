@@ -21,18 +21,20 @@ const ProductPage = () => {
       message: 'Product Added to Wishlist!!',
       });
   };
+  const openNotificationWithIconforWishDetail = (type) => {
+    api[type]({
+      message: 'Product Already exists in WishList!!',
+      });
+  }
   const handleWish = (product) => {
     const isProductAlreadyWishlisted = wish.findIndex(
       (item) => item.product.id === product.id
     );
     console.log(isProductAlreadyWishlisted);
     if (isProductAlreadyWishlisted !== -1) {
-      dispatch(
-        alreadyWishListed({
-          product: product,
-        })
-      );
+      openNotificationWithIconforWishDetail('info');
     } else {
+      openNotificationWithIcon('success');
       dispatch(
         addToWish({
           product: product,
@@ -86,7 +88,6 @@ const ProductPage = () => {
             className="custom-button"
             onClick={(e) => {
               e.stopPropagation();
-              openNotificationWithIcon('success');
               handleWish(product);
             }}
           >
