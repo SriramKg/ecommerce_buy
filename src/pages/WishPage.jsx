@@ -81,12 +81,12 @@ const WishPage = () => {
       sm={12}
       md={8}
       lg={8}
-      xl={12}
+      xl={8}
       key={product.product.id}
       style={{ padding: "8px" }}
     >
       <Card>
-        <Image width="100%" src={product.product.images[0]} height={200} />
+        <Image width="50%" src={product.product.images[0]} height={200} />
         <p>{product.product.title}</p>
         <p>Price : ${product.product.price}</p>
         <p>Product Rating : {product.product.rating}</p>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card, Col, Layout, Row } from "antd";
-import { Flex, Spin, Rate, Image, Button, Divider, notification } from "antd";
+import { Flex, Spin, Rate, Image, Button, Divider, notification,InputNumber } from "antd";
 import CategoryProducts from "./CategoryProducts";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart,updateToCart } from "../store/cartSlice";
@@ -12,6 +12,7 @@ const ProductDetailPage = () => {
   const [api, contextHolder] = notification.useNotification();
   const cart = useSelector((state) => state.cart.cartItem);
   const wish = useSelector((state) => state.wish.wishList);
+  const [quan, setQuan] = useState(1);
   //console.log(cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -57,9 +58,6 @@ const ProductDetailPage = () => {
     const isProductAlreadyWishlisted = wish.findIndex((item) => item.product.id === product.id);
     if(isProductAlreadyWishlisted !== -1){
       openNotificationWithIconforWishDetail('info');
-      // dispatch(alreadyWishListed({
-      //   product: product,
-      // }))
     }
     else{
       openNotificationWithIconforWish('success'); 
@@ -68,20 +66,21 @@ const ProductDetailPage = () => {
       }))
     }
   }
-  const handleCart = (product) => {
+  const handleCart = (product, quantity) => {
     const isProductExisting = cart.findIndex((item) => item.product.id === product.id);
     console.log(isProductExisting);
     console.log(cart[isProductExisting]);
     if(isProductExisting !== -1) {
       dispatch(updateToCart({
         product: product,
-        quantity: cart[isProductExisting].quantity + 1,
+        quantity: quantity,
+        //quantity: cart[isProductExisting].quantity + 1,
       }))
     }
     else{
       dispatch(addToCart({
         product: product,
-        quantity: 1,
+        quantity: quantity,
       }))
     }
   }
@@ -106,9 +105,14 @@ const ProductDetailPage = () => {
               <br />
               <h2>Product Price : ${product.price}</h2>
               <br />
+              <div>
+                <h4>Quantity</h4>
+                <InputNumber min={1} defaultValue={1} onChange={(e) => setQuan(e)}/>
+              </div>
+              <br />
               <Flex>
                 {contextHolder}
-                <Button type="primary" style={{ marginRight: "10px" }} onClick={() => {openNotificationWithIcon('success'); handleCart(product)}}>
+                <Button type="primary" style={{ marginRight: "10px" }} onClick={() => {openNotificationWithIcon('success'); handleCart(product, quan)}} >
                   Add to Cart
                 </Button>
                 <Button type="primary" style={{backgroundColor: "#ff6680"}} onClick={() => {handleWish(product)}}> WishList</Button>
