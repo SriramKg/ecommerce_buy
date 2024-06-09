@@ -39,28 +39,31 @@ const ProductDetailPage = () => {
       </Flex>
     );
   }
-  const openNotificationWithIcon = (type) => {
-    api[type]({
+  const openNotificationWithIcon = (placement) => {
+    api.success({
       message: 'Product Added to Cart!!',
+      placement,
       });
   };
-  const openNotificationWithIconforWish = (type) => {
-    api[type]({
+  const openNotificationWithIconforWish = (placement) => {
+    api.success({
       message: 'Product Added to WishList!!',
+      placement,
       });
   };
-  const openNotificationWithIconforWishDetail = (type) => {
-    api[type]({
+  const openNotificationWithIconforWishDetail = (placement) => {
+    api.info({
       message: 'Product Already exists in WishList!!',
+      placement,
       });
   }
   const handleWish = (product) => {
     const isProductAlreadyWishlisted = wish.findIndex((item) => item.product.id === product.id);
     if(isProductAlreadyWishlisted !== -1){
-      openNotificationWithIconforWishDetail('info');
+      openNotificationWithIconforWishDetail('top');
     }
     else{
-      openNotificationWithIconforWish('success'); 
+      openNotificationWithIconforWish('top'); 
       dispatch(addToWish({
         product: product,
       }))
@@ -112,7 +115,7 @@ const ProductDetailPage = () => {
               <br />
               <Flex>
                 {contextHolder}
-                <Button type="primary" style={{ marginRight: "10px" }} onClick={() => {openNotificationWithIcon('success'); handleCart(product, quan)}} >
+                <Button type="primary" style={{ marginRight: "10px" }} onClick={() => {openNotificationWithIcon('top'); handleCart(product, quan)}} >
                   Add to Cart
                 </Button>
                 <Button type="primary" style={{backgroundColor: "#ff6680"}} onClick={() => {handleWish(product)}}> WishList</Button>

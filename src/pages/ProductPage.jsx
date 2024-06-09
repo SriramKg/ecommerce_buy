@@ -16,14 +16,16 @@ const ProductPage = () => {
   const wish = useSelector((state) => state.wish.wishList);
   console.log("wishlist", wish);
 
-  const openNotificationWithIcon = (type) => {
-    api[type]({
+  const openNotificationWithIcon = (placement) => {
+    api.success({
       message: 'Product Added to Wishlist!!',
+      placement,
       });
   };
-  const openNotificationWithIconforWishDetail = (type) => {
-    api[type]({
+  const openNotificationWithIconforWishDetail = (placement) => {
+    api.info({
       message: 'Product Already exists in WishList!!',
+      placement,
       });
   }
   const handleWish = (product) => {
@@ -32,9 +34,9 @@ const ProductPage = () => {
     );
     console.log(isProductAlreadyWishlisted);
     if (isProductAlreadyWishlisted !== -1) {
-      openNotificationWithIconforWishDetail('info');
+      openNotificationWithIconforWishDetail('top');
     } else {
-      openNotificationWithIcon('success');
+      openNotificationWithIcon('top');
       dispatch(
         addToWish({
           product: product,

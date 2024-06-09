@@ -29,14 +29,16 @@ const WishPage = () => {
     );
   };
 
-  const openNotificationWithIcon = (type) => {
-    api[type]({
+  const openNotificationWithIcon = (placement) => {
+    api.info({
       message: "Product Removed from Wishlist!!",
+      placement,
     });
   };
-  const openNotificationWithIconSuccess = (type) => {
-    api[type]({
+  const openNotificationWithIconSuccess = (placement) => {
+    api.success({
       message: "Product Added to Cart!!",
+      placement,
     });
   };
 
@@ -94,7 +96,7 @@ const WishPage = () => {
         <Button
           type="primary"
           onClick={() => {
-            openNotificationWithIconSuccess("success");
+            openNotificationWithIconSuccess("top");
             handleCart(product.product);
           }}
         >
@@ -105,7 +107,7 @@ const WishPage = () => {
         {contextHolder}
         <Button
           onClick={() => {
-            openNotificationWithIcon("info");
+            openNotificationWithIcon("top");
             deleteWish(product.product);
           }}
           style={{ color: "white", backgroundColor: "hotpink" }}

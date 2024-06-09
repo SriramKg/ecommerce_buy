@@ -1,15 +1,48 @@
 import AppLayout from "./AppLayout";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart,updateToCart,deleteAProduct } from "../store/cartSlice";
-import { Card, Col, Layout, Row, Image, InputNumber, Button } from "antd";
-import {DeleteOutlined} from "@ant-design/icons";
+import { addToWish } from "../store/wishSlice";
+import { Card, Col, Layout, Row, Image, InputNumber, Button, notification } from "antd";
+import {DeleteOutlined, HeartOutlined,BorderTopOutlined} from "@ant-design/icons";
 
 const { Content } = Layout;
 
 const CartPage = () => {
+  const [api, contextHolder] = notification.useNotification();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cartItem);
+  const wish = useSelector((state) => state.wish.wishList);
   console.log("In cart page", cart);
+
+  const openNotification = (placement) => {
+    api.success({
+      message: 'Product Added to WishList!!',
+      placement,
+    });
+  };
+
+  const openNotificationWithIconforWishDetail = (placement) => {
+    api.info({
+      message: 'Product Already exists in WishList!!',
+      placement,
+      });
+    }
+
+  const moveToWish = (product) => {
+    const isProductAlreadyWishlisted = wish.findIndex((item) => item.product.id === product.id);
+    if(isProductAlreadyWishlisted !== -1){
+      openNotificationWithIconforWishDetail('top');
+    }
+    else{
+      openNotification('top'); 
+      dispatch(addToWish({
+        product: product,
+      }))
+      dispatch(deleteAProduct({
+        product: product,
+      }))
+    }
+  }
 
   const handleCart = (product, quantity) => {
     const isProductExisting = cart.findIndex((item) => item.product.id === product.id);
@@ -49,6 +82,7 @@ const CartPage = () => {
           <p>Category: {product.product.category}</p>
           <InputNumber min={1} defaultValue={product.quantity} onChange={(value) => handleCart(product.product, value)}/>
           <p>Price: ${product.product.price}</p>
+          <Button onClick={() => {moveToWish(product.product)}}> <HeartOutlined />Move to Wishlist</Button>
           <Button onClick={() => {deleteCart(product)}}><DeleteOutlined />Delete</Button>
         </Card>
       </Col>
@@ -62,6 +96,7 @@ const CartPage = () => {
           <Col xs={24} md={16}>
             {prodList}
           </Col>
+          {contextHolder}
           <Col xs={24} md={8}>
             <Card>
               <h1>Order Summary</h1>
