@@ -1,9 +1,10 @@
 import { Layout, Flex, Button, Badge } from "antd";
 import { ShoppingOutlined, HeartOutlined } from "@ant-design/icons";
-import { Content } from "antd/es/layout/layout";
+//import { Content } from "antd/es/layout/layout";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-const { Header, Footer } = Layout;
+const { Header, Footer, Content } = Layout;
+
 
 const AppLayout = ({ children }) => {
   const cart = useSelector((state) => state.cart.cartItem);
